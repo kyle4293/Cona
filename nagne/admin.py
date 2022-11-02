@@ -1,7 +1,7 @@
 from django.contrib import admin
-from .models import Assignment
+from .models import Post
 
-class AssignmentAdmin(admin.ModelAdmin):
+class PostAdmin(admin.ModelAdmin):
     search_fields = ['subject']
 
-admin.site.register(Assignment, AssignmentAdmin)
+admin.site.register(Post, PostAdmin)

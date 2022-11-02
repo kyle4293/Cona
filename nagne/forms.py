@@ -1,9 +1,9 @@
 from django import forms
-from nagne.models import Assignment, Answer
+from nagne.models import Post, Answer
 
-class AssignmentForm(forms.ModelForm):
+class PostForm(forms.ModelForm):
     class Meta:
-        model = Assignment
+        model = Post
         fields = ['subject', 'content']
 
         labels = {
