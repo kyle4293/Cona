@@ -2,8 +2,11 @@ from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Q
 from ..models import Post
+import logging
+logger = logging.getLogger('nagne')
 
 def index(request):
+    logger.info("INFO 레벨로 출력")
     page = request.GET.get('page','1')
     kw = request.GET.get('kw', '')  # 검색어
     post_list = Post.objects.order_by('-create_date')

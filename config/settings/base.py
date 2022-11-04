@@ -191,5 +191,9 @@ LOGGING = {
             'level': 'INFO',
             'propagate': False,
         },
+        'nagne': {
+            'handlers': ['console', 'file'],
+            'level': 'INFO',
+        },
     }
 }
