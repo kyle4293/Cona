@@ -12,6 +12,8 @@ urlpatterns = [
          base_views.detail, name='detail'),
 
     # post_views.py
+    path('post/list/',
+         post_views.post_list, name='post_list'),
     path('post/create/',
          post_views.post_create, name='post_create'),
     path('post/modify/<int:post_id>/',
