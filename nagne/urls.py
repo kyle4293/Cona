@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import base_views, post_views, answer_views
+from .views import base_views, post_views, answer_views, about_views, portfolio_views, community_views, contact_views
 
 app_name = 'nagne'
 
@@ -10,6 +10,20 @@ urlpatterns = [
          base_views.index, name='index'),
     path('<int:post_id>/',
          base_views.detail, name='detail'),
+
+    # about_views.py
+    path('about/',
+         about_views.about, name='about'),
+    #portfolio_views.py
+    path('portfolio/',
+         portfolio_views.portfolio, name='portfolio'),
+    #community_views.py
+    path('community/',
+         community_views.community, name='community'),
+    #contact_views.py
+    path('contact/',
+         contact_views.contact, name='contact'),
+
 
     # post_views.py
     path('post/list/',
