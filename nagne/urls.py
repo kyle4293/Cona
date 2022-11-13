@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import base_views, post_views, answer_views, about_views, portfolio_views, community_views, contact_views
+from .views import base_views, post_views, answer_views, about_views, portfolio_views, study_views, contact_views
 
 app_name = 'nagne'
 
@@ -17,9 +17,9 @@ urlpatterns = [
     #portfolio_views.py
     path('portfolio/',
          portfolio_views.portfolio, name='portfolio'),
-    #community_views.py
-    path('community/',
-         community_views.community, name='community'),
+    #study_views.py
+    path('study/',
+         study_views.study, name='study'),
     #contact_views.py
     path('contact/',
          contact_views.contact, name='contact'),

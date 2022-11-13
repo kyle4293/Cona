@@ -1,45 +1,53 @@
+{% load static %}
 <!-- 네비게이션바 -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom">
+<nav style="margin-bottom:45px;" class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
     <div class="container-fluid">
-        <a class="navbar-brand" href="{% url 'nagne:index' %}">CONA</a>
+        <a class="navbar-brand" href="{% url 'nagne:index' %}"><img src="{% static 'conalogo.png' %}" alt="" width="70"></a>
         <button class="navbar-toggler" type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent"
-                aria-expanded="false"
-                aria-label="Toggle navigation">
+                data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasNavbar"
+                aria-controls="#offcanvasNavbar">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'nagne:about' %}">About Us</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'nagne:portfolio' %}">Portfolio</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'nagne:community' %}">Community</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'nagne:post_list' %}">Study</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'nagne:contact' %}">Contact</a>
-                </li>
-                <li class="nav-item">
-                    {% if user.is_authenticated %}
-                    <a class="nav-link" href="{% url 'common:logout' %}">{{ user.username }} (로그아웃)</a>
-                    {% else %}
-                    <a class="nav-link" href="{% url 'common:login' %}">로그인</a>
-                    {% endif %}
-                </li>
-                <li>
-                    {% if not user.is_authenticated %}
-                    <a class="nav-link" href="{% url 'common:signup' %}">회원가입</a>
-                    {% endif %}
-                </li>
-            </ul>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasNavbarLabel">CONA</h5>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div style="color:#ccc;" class="offcanvas-body">
+                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'nagne:index' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'nagne:about' %}">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'nagne:portfolio' %}">Portfolio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'nagne:post_list' %}">Community</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'nagne:study' %}">Study</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'nagne:contact' %}">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        {% if user.is_authenticated %}
+                        <a class="nav-link" href="{% url 'common:logout' %}">{{ user.username }} (로그아웃)</a>
+                        {% else %}
+                        <a class="nav-link" href="{% url 'common:login' %}">로그인</a>
+                        {% endif %}
+                    </li>
+                    <li>
+                        {% if not user.is_authenticated %}
+                        <a class="nav-link" href="{% url 'common:signup' %}">회원가입</a>
+                        {% endif %}
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 </nav>

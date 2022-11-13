@@ -11,14 +11,16 @@
     <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
     <title>CONA</title>
 </head>
-<body>
+<body >
 
 <!-- Navigation-->
 {% include "navbar.html" %}
 
+<div style="padding-top:55px;">
+    {% block content %}
+    {% endblock %}
+</div>
 
-{% block content %}
-{% endblock %}
 
 
 
