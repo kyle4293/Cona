@@ -1,5 +1,47 @@
 {% extends 'home.html' %}
+{% load static %}
 {% block content %}
 
-아직 준비중인 기능입니다.
+<!-- Contact-->
+<section class="page-section bg-light" id="team">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="section-heading text-uppercase">Contact</h2>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="my-5 col-lg-4">
+                <div class="team-member">
+                    <div class="mx-auto">
+                        <img class="mx-auto" src="{% static 'email.png' %}" alt="..." width="50px;">
+                        <h4>Email</h4>
+                    </div>
+                    <p class="text-muted">Official</p>
+                    <p>code.nageune@gmail.com</p>
+                    <p class="text-muted">Lead Developer</p>
+                    <p>chang4293@gmail.com</p>
+                </div>
+            </div>
+            <div class="my-5 col-lg-4">
+                <div class="team-member">
+                    <img class="mx-auto" src="{% static 'instagram.png' %}" alt="..." width="50px;">
+                    <h4>Instagram</h4>
+                    <br>
+                    <a class="text-muted" href="https://www.instagram.com/code.nageune/"><img class="mx-auto rounded-circle" src="{% static 'instagram.png' %}" alt="..." width="30px;"><i> @code.nageune</i></a>
+                </div>
+            </div>
+            <div class="my-5 col-lg-4">
+                <div class="team-member">
+                    <img class="mx-auto" src="{% static 'pin.png' %}" alt="..." width="50px;">
+                    <h4>Address</h4>
+                    <br>
+                    <p class="text-muted">서울특별시 광진구 능동로 120<br>(화양동, 건국대학교) 공과대학 a동 503-5호 </p>
+                </div>
+            </div>
+        </div>
+        <div class="my-5 row">
+            <div class="col-lg-8 mx-auto text-center"><p class="large text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut eaque, laboriosam veritatis, quos non quis ad perspiciatis, totam corporis ea, alias ut unde.</p></div>
+        </div>
+    </div>
+</section>
 {% endblock %}

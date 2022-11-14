@@ -1,5 +1,6 @@
 {% extends 'home.html' %}
 {% load static%}
+{% load nagne_filter %}
 {% block content %}
 <!-- About-->
 <div class="container-fluid">
@@ -41,485 +42,96 @@
     </nav>
 
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-      <!-- Django-->
-      <section style="padding-top:55px;" class="page-section" id="django">
-        <div class="container">
-            <div class="text-center">
-                <h2 class="section-heading">Django</h2>
-                <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
+        <div class="container my-3">
+            <div  class="col-6 offset-6">
+                <div class="d-flex input-group">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="search_kw" value="{{ kw|default_if_none:'' }}">
+                    <div>
+                        <button class="btn btn-outline-secondary" type="submit" id="btn_search">검색</button>
+                    </div>
+                </div>
             </div>
-            <div class="row">
-                <div class="col-lg-4">
-                    <div class="team-member">
-                        <img class="mx-auto rounded-circle" src="{% static 'conalogo2.png' %}" alt="..." width="300px;">
-                        <h4>활동1</h4>
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#djangoModal1">
-                          더보기
-                        </button>
 
-                        <!-- Modal -->
-                        <div class="modal fade" id="djangoModal1" tabindex="-1" aria-labelledby="djangoModalLabel1" aria-hidden="true">
-                          <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title" id="djangoModalLabel1">활동1</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                              </div>
-                              <div class="modal-body">
-                                활동 내용
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="team-member">
-                        <img class="mx-auto rounded-circle" src="{% static 'conalogo2.png' %}" alt="..." width="300px;">
-                        <h4>활동2</h4>
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#djangoModal2">
-                          더보기
-                        </button>
-
-                        <!-- Modal -->
-                        <div class="modal fade" id="djangoModal2" tabindex="-1" aria-labelledby="djangoModalLabel2" aria-hidden="true">
-                          <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title" id="djangoModalLabel2">활동2</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                              </div>
-                              <div class="modal-body">
-                                활동 내용
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="team-member">
-                        <img class="mx-auto rounded-circle" src="{% static 'conalogo2.png' %}" alt="..." width="300px;">
-                        <h4>활동3</h4>
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#djangoModal3">
-                          더보기
-                        </button>
-
-                        <!-- Modal -->
-                        <div class="modal fade" id="djangoModal3" tabindex="-1" aria-labelledby="djangoModalLabel3" aria-hidden="true">
-                          <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title" id="djangoModalLabel3">활동3</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                              </div>
-                              <div class="modal-body">
-                                활동 내용
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                    </div>
-                </div>
+            <table class="table">
+                <thead>
+                <tr class="text-center">
+                    <th>번호</th>
+                    <th style="width:50%">제목</th>
+                    <th>글쓴이</th>
+                    <th>작성일시</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% if post_list %}
+                {% for post in post_list %}
+                <tr class="text-center">
+                     <td>
+                        <!-- 번호 = 전체건수 - 시작인덱스 - 현재인덱스 + 1 -->
+                        {{ post_list.paginator.count|sub:post_list.start_index|sub:forloop.counter0|add:1 }}
+                    </td>
+                    <td class="text-start">
+                        <a href="{% url 'nagne:detail' post.id %}">{{ post.subject }}</a>
+                         {% if post.answer_set.count > 0 %}
+                        <span class="text-danger small mx-2">{{ post.answer_set.count }}</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ post.author.username }}</td>
+                    <td>{{ post.create_date }}</td>
+                </tr>
+                {% endfor %}
+                {% else %}
+                <tr>
+                    <td colspan="4">게시글이 없습니다.</td>
+                </tr>
+                {% endif %}
+                </tbody>
+            </table>
+            <!-- 페이징처리 시작 -->
+            <ul class="pagination justify-content-center">
+                <!-- 이전페이지 -->
+                {% if post_list.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" data-page="{{ post_list.previous_page_number }}" href="javascript:void(0)">이전</a>
+                </li>
+                {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
+                </li>
+                {% endif %}
+                <!-- 페이지리스트 -->
+                {% for page_number in post_list.paginator.page_range %}
+                {% if page_number >= post_list.number|add:-5 and page_number <= post_list.number|add:5 %}
+                {% if page_number == post_list.number %}
+                <li class="page-item active" aria-current="page">
+                    <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+                </li>
+                {% else %}
+                <li class="page-item">
+                    <a class="page-link" data-page="{{ page_number }}" href="javascript:void(0)">{{ page_number }}</a>
+                </li>
+                {% endif %}
+                {% endif %}
+                {% endfor %}
+                <!-- 다음페이지 -->
+                {% if post_list.has_next %}
+                <li class="page-item">
+                    <a class="page-link" data-page="{{ post_list.next_page_number }}" href="javascript:void(0)">다음</a>
+                </li>
+                {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
+                </li>
+                {% endif %}
+            </ul>
+            <!-- 페이징처리 끝 -->
+            <div class="col-6 offset-11">
+                    <a href="{% url 'nagne:post_create' %}" class="btn btn-primary">글쓰기</a>
             </div>
         </div>
-      </section>
-        <hr>
-        <!-- C -->
-        <section style="padding-top:55px;" class="page-section" id="c">
-        <div class="container">
-            <div class="text-center">
-                <h2 class="section-heading">C-Programming</h2>
-                <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
-            </div>
-            <div class="row">
-                <div class="col-lg-4">
-                    <div class="team-member">
-                        <img class="mx-auto rounded-circle" src="{% static 'conalogo2.png' %}" alt="..." width="300px;">
-                        <h4>활동1</h4>
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#CModal1">
-                          더보기
-                        </button>
-
-                        <!-- Modal -->
-                        <div class="modal fade" id="CModal1" tabindex="-1" aria-labelledby="CModalLabel1" aria-hidden="true">
-                          <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title" id="CModalLabel1">활동1</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                              </div>
-                              <div class="modal-body">
-                                활동 내용
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="team-member">
-                        <img class="mx-auto rounded-circle" src="{% static 'conalogo2.png' %}" alt="..." width="300px;">
-                        <h4>활동2</h4>
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#CModal2">
-                          더보기
-                        </button>
-
-                        <!-- Modal -->
-                        <div class="modal fade" id="CModal2" tabindex="-1" aria-labelledby="CModalLabel2" aria-hidden="true">
-                          <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title" id="CModalLabel2">활동2</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                              </div>
-                              <div class="modal-body">
-                                활동 내용
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="team-member">
-                        <img class="mx-auto rounded-circle" src="{% static 'conalogo2.png' %}" alt="..." width="300px;">
-                        <h4>활동3</h4>
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#CModal3">
-                          더보기
-                        </button>
-
-                        <!-- Modal -->
-                        <div class="modal fade" id="CModal3" tabindex="-1" aria-labelledby="CModalLabel3" aria-hidden="true">
-                          <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title" id="CModalLabel3">활동3</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                              </div>
-                              <div class="modal-body">
-                                활동 내용
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-      </section>
-        <hr>
-        <!-- Backend-->
-      <section style="padding-top:55px;" class="page-section" id="backend">
-        <div class="container">
-            <div class="text-center">
-                <h2 class="section-heading">Backend</h2>
-                <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
-            </div>
-            <div class="row">
-                <div class="col-lg-4">
-                    <div class="team-member">
-                        <img class="mx-auto rounded-circle" src="{% static 'conalogo2.png' %}" alt="..." width="300px;">
-                        <h4>활동1</h4>
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#backendModal1">
-                          더보기
-                        </button>
-
-                        <!-- Modal -->
-                        <div class="modal fade" id="backendModal1" tabindex="-1" aria-labelledby="backendModalLabel1" aria-hidden="true">
-                          <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title" id="backendModalLabel1">활동1</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                              </div>
-                              <div class="modal-body">
-                                활동 내용
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="team-member">
-                        <img class="mx-auto rounded-circle" src="{% static 'conalogo2.png' %}" alt="..." width="300px;">
-                        <h4>활동2</h4>
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#backendModal2">
-                          더보기
-                        </button>
-
-                        <!-- Modal -->
-                        <div class="modal fade" id="backendModal2" tabindex="-1" aria-labelledby="backendModalLabel2" aria-hidden="true">
-                          <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title" id="backendModalLabel2">활동2</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                              </div>
-                              <div class="modal-body">
-                                활동 내용
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="team-member">
-                        <img class="mx-auto rounded-circle" src="{% static 'conalogo2.png' %}" alt="..." width="300px;">
-                        <h4>활동3</h4>
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#backendModal3">
-                          더보기
-                        </button>
-
-                        <!-- Modal -->
-                        <div class="modal fade" id="backendModal3" tabindex="-1" aria-labelledby="backendModalLabel3" aria-hidden="true">
-                          <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title" id="backendModalLabel3">활동3</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                              </div>
-                              <div class="modal-body">
-                                활동 내용
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-      </section>
-        <hr>
-      <!-- Algorithm -->
-      <section style="padding-top:55px;" class="page-section" id="algorithm">
-        <div class="container">
-            <div class="text-center">
-                <h2 class="section-heading">Algorithm</h2>
-                <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
-            </div>
-            <div class="row">
-                <div class="col-lg-4">
-                    <div class="team-member">
-                        <img class="mx-auto rounded-circle" src="{% static 'conalogo2.png' %}" alt="..." width="300px;">
-                        <h4>활동1</h4>
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#algorithmModal1">
-                          더보기
-                        </button>
-
-                        <!-- Modal -->
-                        <div class="modal fade" id="algorithmModal1" tabindex="-1" aria-labelledby="algorithmModalLabel1" aria-hidden="true">
-                          <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title" id="algorithmModalLabel1">활동1</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                              </div>
-                              <div class="modal-body">
-                                활동 내용
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="team-member">
-                        <img class="mx-auto rounded-circle" src="{% static 'conalogo2.png' %}" alt="..." width="300px;">
-                        <h4>활동2</h4>
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#algorithmModal2">
-                          더보기
-                        </button>
-
-                        <!-- Modal -->
-                        <div class="modal fade" id="algorithmModal2" tabindex="-1" aria-labelledby="algorithmModalLabel2" aria-hidden="true">
-                          <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title" id="algorithmModalLabel2">활동2</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                              </div>
-                              <div class="modal-body">
-                                활동 내용
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="team-member">
-                        <img class="mx-auto rounded-circle" src="{% static 'conalogo2.png' %}" alt="..." width="300px;">
-                        <h4>활동3</h4>
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#algorithmModal3">
-                          더보기
-                        </button>
-
-                        <!-- Modal -->
-                        <div class="modal fade" id="algorithmModal3" tabindex="-1" aria-labelledby="algorithmModalLabel3" aria-hidden="true">
-                          <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title" id="algorithmModalLabel3">활동3</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                              </div>
-                              <div class="modal-body">
-                                활동 내용
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-      </section>
-        <hr>
-      <!-- Swift -->
-      <section style="padding-top:55px;" class="page-section" id="swift">
-        <div class="container">
-            <div class="text-center">
-                <h2 class="section-heading">Swift</h2>
-                <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
-            </div>
-            <div class="row">
-                <div class="col-lg-4">
-                    <div class="team-member">
-                        <img class="mx-auto rounded-circle" src="{% static 'conalogo2.png' %}" alt="..." width="300px;">
-                        <h4>활동1</h4>
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#swiftModal1">
-                          더보기
-                        </button>
-
-                        <!-- Modal -->
-                        <div class="modal fade" id="swiftModal1" tabindex="-1" aria-labelledby="swiftModalLabel1" aria-hidden="true">
-                          <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title" id="swiftModalLabel1">활동1</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                              </div>
-                              <div class="modal-body">
-                                활동 내용
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="team-member">
-                        <img class="mx-auto rounded-circle" src="{% static 'conalogo2.png' %}" alt="..." width="300px;">
-                        <h4>활동2</h4>
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#swiftModal2">
-                          더보기
-                        </button>
-
-                        <!-- Modal -->
-                        <div class="modal fade" id="swiftModal2" tabindex="-1" aria-labelledby="swiftModalLabel2" aria-hidden="true">
-                          <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title" id="swiftModalLabel2">활동2</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                              </div>
-                              <div class="modal-body">
-                                활동 내용
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="team-member">
-                        <img class="mx-auto rounded-circle" src="{% static 'conalogo2.png' %}" alt="..." width="300px;">
-                        <h4>활동3</h4>
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#swiftModal3">
-                          더보기
-                        </button>
-
-                        <!-- Modal -->
-                        <div class="modal fade" id="swiftModal3" tabindex="-1" aria-labelledby="swiftModalLabel3" aria-hidden="true">
-                          <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title" id="swiftModalLabel3">활동3</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                              </div>
-                              <div class="modal-body">
-                                활동 내용
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-      </section>
+        <form id="searchForm" method="get" action="{% url 'nagne:post_list' %}">
+            <input type="hidden" id="kw" name="kw" value="{{ kw|default_if_none:'' }}">
+            <input type="hidden" id="page" name="page" value="{{ page }}">
+        </form>
     </main>
   </div>
 </div>
