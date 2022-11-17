@@ -1,13 +1,14 @@
 {% extends 'home.html' %}
 {% load static%}
 {% block content %}
+
 <!-- Portfolio-->
 <div class="container-fluid">
   <div class="row">
     <nav style="position:fixed; height:100%;" id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
       <div class="position-sticky pt-3">
         <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-          <span>Study</span>
+          <span>Portfolio</span>
         </h6>
         <hr>
         <ul class="nav flex-column">
@@ -41,7 +42,64 @@
     </nav>
 
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-      <!-- Django-->
+        <!-- Portfolio-->
+        <section class="content-section" id="portfolio">
+            <div class="container px-4 px-lg-5">
+                <div class="content-section-heading text-center">
+                    <h3 class="text-secondary mb-0">Portfolio</h3>
+                    <h2 class="mb-5">Recent Projects</h2>
+                </div>
+                <div class="row gx-0">
+                    <div class="col-lg-6">
+                        <a class="portfolio-item" href="https://codenageune.kr/">
+                            <div class="caption">
+                                <div class="caption-content">
+                                    <div class="h2">Django</div>
+                                    <p class="mb-0">CONA Homepage</p>
+                                </div>
+                            </div>
+                            <img class="img-fluid" src="{% static 'images/homepage.png' %}" alt="...">
+                        </a>
+                    </div>
+                    <div class="col-lg-6">
+                        <a class="portfolio-item" href="#!">
+                            <div class="caption">
+                                <div class="caption-content">
+                                    <div class="h2">Django</div>
+                                    <p class="mb-0">Community</p>
+                                </div>
+                            </div>
+                            <img class="img-fluid" src="{% static 'images/community.png' %}" alt="..." />
+                        </a>
+                    </div>
+                    <div class="col-lg-6">
+                        <a class="portfolio-item" href="#!">
+                            <div class="caption">
+                                <div class="caption-content">
+                                    <div class="h2">Swift</div>
+                                    <p class="mb-0">Everytime</p>
+                                </div>
+                            </div>
+                            <img class="img-fluid" src="{% static 'images/everytime.png' %}" alt="..." />
+                        </a>
+                    </div>
+                    <div class="col-lg-6">
+                        <a class="portfolio-item" href="#!">
+                            <div class="caption">
+                                <div class="caption-content">
+                                    <div class="h2">Swift</div>
+                                    <p class="mb-0">Calculator</p>
+                                </div>
+                            </div>
+                            <img class="img-fluid" src="{% static 'images/calculator.png' %}" alt="..." />
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Django-->
       <section style="padding-top:55px;" class="page-section" id="django">
         <div class="container">
             <div class="text-center">
@@ -51,8 +109,8 @@
             <div class="row">
                 <div class="col-lg-4">
                     <div class="team-member">
-                        <img class="mx-auto rounded-circle" src="{% static 'images/conalogo2.png' %}" alt="..." width="300px;">
-                        <h4>활동1</h4>
+                        <img class="mx-auto" src="{% static 'images/django.png' %}" alt="..." width="300px;">
+                        <h4>Django 기초학습</h4>
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#djangoModal1">
                           더보기
@@ -67,7 +125,8 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                               </div>
                               <div class="modal-body">
-                                활동 내용
+                                  <img class="mx-auto" src="{% static 'images/django.png' %}" alt="..." width="450px;">
+                                  활동 내용
                               </div>
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -79,8 +138,8 @@
                 </div>
                 <div class="col-lg-4">
                     <div class="team-member">
-                        <img class="mx-auto rounded-circle" src="{% static 'images/conalogo2.png' %}" alt="..." width="300px;">
-                        <h4>활동2</h4>
+                        <img class="mx-auto" src="{% static 'images/community.png' %}" alt="..." width="300px;">
+                        <h4>게시판 만들기</h4>
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#djangoModal2">
                           더보기
@@ -95,7 +154,8 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                               </div>
                               <div class="modal-body">
-                                활동 내용
+                                  <img class="mx-auto" src="{% static 'images/community.png' %}" alt="..." width="450px;">
+                                  활동 내용
                               </div>
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -107,8 +167,8 @@
                 </div>
                 <div class="col-lg-4">
                     <div class="team-member">
-                        <img class="mx-auto rounded-circle" src="{% static 'images/conalogo2.png' %}" alt="..." width="300px;">
-                        <h4>활동3</h4>
+                        <img class="mx-auto" src="{% static 'images/homepage.png' %}" alt="..." width="300px;">
+                        <h4>CONA홈페이지 제작</h4>
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#djangoModal3">
                           더보기
@@ -123,7 +183,8 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                               </div>
                               <div class="modal-body">
-                                활동 내용
+                                  <img class="mx-auto" src="{% static 'images/homepage.png' %}" alt="..." width="450px;">
+                                  활동 내용
                               </div>
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -339,7 +400,7 @@
             <div class="row">
                 <div class="col-lg-4">
                     <div class="team-member">
-                        <img class="mx-auto rounded-circle" src="{% static 'conalogo2.png' %}" alt="..." width="300px;">
+                        <img class="mx-auto rounded-circle" src="{% static 'images/conalogo2.png' %}" alt="..." width="300px;">
                         <h4>활동1</h4>
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#algorithmModal1">
@@ -367,7 +428,7 @@
                 </div>
                 <div class="col-lg-4">
                     <div class="team-member">
-                        <img class="mx-auto rounded-circle" src="{% static 'conalogo2.png' %}" alt="..." width="300px;">
+                        <img class="mx-auto rounded-circle" src="{% static 'images/conalogo2.png' %}" alt="..." width="300px;">
                         <h4>활동2</h4>
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#algorithmModal2">
@@ -395,7 +456,7 @@
                 </div>
                 <div class="col-lg-4">
                     <div class="team-member">
-                        <img class="mx-auto rounded-circle" src="{% static 'conalogo2.png' %}" alt="..." width="300px;">
+                        <img class="mx-auto rounded-circle" src="{% static 'images/conalogo2.png' %}" alt="..." width="300px;">
                         <h4>활동3</h4>
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#algorithmModal3">
@@ -435,7 +496,7 @@
             <div class="row">
                 <div class="col-lg-4">
                     <div class="team-member">
-                        <img class="mx-auto rounded-circle" src="{% static 'conalogo2.png' %}" alt="..." width="300px;">
+                        <img class="mx-auto rounded-circle" src="{% static 'images/conalogo2.png' %}" alt="..." width="300px;">
                         <h4>활동1</h4>
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#swiftModal1">
@@ -463,7 +524,7 @@
                 </div>
                 <div class="col-lg-4">
                     <div class="team-member">
-                        <img class="mx-auto rounded-circle" src="{% static 'conalogo2.png' %}" alt="..." width="300px;">
+                        <img class="mx-auto rounded-circle" src="{% static 'images/conalogo2.png' %}" alt="..." width="300px;">
                         <h4>활동2</h4>
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#swiftModal2">
@@ -491,7 +552,7 @@
                 </div>
                 <div class="col-lg-4">
                     <div class="team-member">
-                        <img class="mx-auto rounded-circle" src="{% static 'conalogo2.png' %}" alt="..." width="300px;">
+                        <img class="mx-auto rounded-circle" src="{% static 'images/conalogo2.png' %}" alt="..." width="300px;">
                         <h4>활동3</h4>
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#swiftModal3">
