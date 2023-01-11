@@ -12,66 +12,67 @@
     </div>
     {% endif %}
     <!-- 질문 -->
-    <h2 class="border-bottom py-2">{{ post.subject }}</h2>
+    <p>{{ assignment.study_name }}</p>
+    <h2 class="border-bottom py-2">{{ assignment.subject }}</h2>
     <div class="card my-3">
         <div class="card-body">
-            <div class="card-text" >{{ post.content|mark }}</div>
+            <div class="card-text" >{{ assignment.content|mark }}</div>
             <div class="d-flex justify-content-end">
-                {% if post.modify_date %}
+                {% if assignment.modify_date %}
                 <div class="badge bg-light text-dark p-2 text-start mx-3">
                     <div class="mb-2">modified at</div>
-                    <div>{{ post.modify_date }}</div>
+                    <div>{{ assignment.modify_date }}</div>
                 </div>
                 {% endif %}
                 <div class="badge bg-light text-dark p-2 text-start">
-                    <div class="mb-2">{{ post.author.username }}</div>
-                    <div>{{ post.create_date }}</div>
+                    <div class="mb-2">{{ assignment.author.username }}</div>
+                    <div>{{ assignment.create_date }}</div>
                 </div>
             </div>
              <div class="my-3">
-                 <a href="javascript:void(0)" data-uri="{% url 'nagne:post_vote' post.id  %}" class="recommend btn btn-sm btn-outline-secondary"> 추천
-                <span class="badge rounded-pill bg-success">{{post.voter.count}}</span>
+                 <a href="javascript:void(0)" data-uri="{% url 'nagne:assignment_vote' assignment.id  %}" class="recommend btn btn-sm btn-outline-secondary"> 추천
+                <span class="badge rounded-pill bg-success">{{assignment.voter.count}}</span>
                 </a>
-                {% if request.user == post.author %}
-                <a href="{% url 'nagne:post_modify' post.id  %}" class="btn btn-sm btn-outline-secondary">수정</a>
-                <a href="javascript:void(0)" class="delete btn btn-sm btn-outline-secondary" data-uri="{% url 'nagne:post_delete' post.id  %}">삭제</a>
+                {% if request.user == assignment.author %}
+                <a href="{% url 'nagne:assignment_modify' assignment.id  %}" class="btn btn-sm btn-outline-secondary">수정</a>
+                <a href="javascript:void(0)" class="delete btn btn-sm btn-outline-secondary" data-uri="{% url 'nagne:assignment_delete' assignment.id  %}">삭제</a>
                 {% endif %}
             </div>
         </div>
     </div>
     <!-- 댓글 -->
-    <h5 class="border-bottom my-3 py-2">{{post.comment_set.count}}개의 댓글이 있습니다.</h5>
-    {% for comment in post.comment_set.all %}
-    <a id="comment_{{ comment.id }}"></a>
+    <h5 class="border-bottom my-3 py-2">{{assignment.answer_set.count}}개의 댓글이 있습니다.</h5>
+    {% for answer in assignment.answer_set.all %}
+    <a id="answer_{{ answer.id }}"></a>
     <div class="card my-3">
         <div class="card-body">
-            <div class="card-text">{{ comment.content|mark }}</div>
+            <div class="card-text">{{ answer.content|mark }}</div>
             <div class="d-flex justify-content-end">
-                {% if comment.modify_date %}
+                {% if answer.modify_date %}
                 <div class="badge bg-light text-dark p-2 text-start mx-3">
                     <div class="mb-2">modified at</div>
-                    <div>{{ comment.modify_date }}</div>
+                    <div>{{ answer.modify_date }}</div>
                 </div>
                 {% endif %}
                 <div class="badge bg-light text-dark p-2 text-start">
-                    <div class="mb-2">{{ comment.author.username }}</div>
-                    <div>{{ comment.create_date }}</div>
+                    <div class="mb-2">{{ answer.author.username }}</div>
+                    <div>{{ answer.create_date }}</div>
                 </div>
             </div>
             <div class="my-3">
-                <a href="javascript:void(0)" data-uri="{% url 'nagne:comment_vote' comment.id  %}" class="recommend btn btn-sm btn-outline-secondary"> 추천
-                <span class="badge rounded-pill bg-success">{{comment.voter.count}}</span>
+                <a href="javascript:void(0)" data-uri="{% url 'nagne:answer_vote' answer.id  %}" class="recommend btn btn-sm btn-outline-secondary"> 추천
+                <span class="badge rounded-pill bg-success">{{answer.voter.count}}</span>
                 </a>
-                {% if request.user == comment.author %}
-                <a href="{% url 'nagne:comment_modify' comment.id  %}" class="btn btn-sm btn-outline-secondary">수정</a>
-                <a href="#" class="delete btn btn-sm btn-outline-secondary " data-uri="{% url 'nagne:comment_delete' comment.id  %}">삭제</a>
+                {% if request.user == answer.author %}
+                <a href="{% url 'nagne:answer_modify' answer.id  %}" class="btn btn-sm btn-outline-secondary">수정</a>
+                <a href="#" class="delete btn btn-sm btn-outline-secondary " data-uri="{% url 'nagne:answer_delete' answer.id  %}">삭제</a>
                 {% endif %}
             </div>
         </div>
     </div>
     {% endfor %}
     <!-- 댓글 등록 -->
-    <form action="{% url 'nagne:comment_create' post.id %}" method="post" class="my-3">
+    <form action="{% url 'nagne:answer_create' assignment.id %}" method="assignment" class="my-3">
         {% csrf_token %}
         <!-- 오류표시 Start -->
         {% if form.errors %}
