@@ -13,3 +13,10 @@ def sub(value, arg):
 def mark(value):
     extensions = ["nl2br", "fenced_code"]
     return mark_safe(markdown.markdown(value, extensions=extensions))
+
+@register.filter
+def cp(value, arg):
+    if str(value) == str(arg):
+        return True
+    else:
+        return False

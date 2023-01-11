@@ -8,35 +8,19 @@
     <nav style="position:fixed; height:100%;" id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
       <div class="position-sticky pt-3">
         <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-          <span>Study-team1</span>
+          <span>Study</span>
         </h6>
         <hr>
         <ul class="nav flex-column">
-          <li class="nav-item">
-            <a class="nav-link" href="#django">
-              Django
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#c">
-              C-Programming
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#backend">
-              Backend
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#algorithm">
-              Algorithm
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#swift">
-              Swift
-            </a>
-          </li>
+          {% if study %}
+            {% for studygroup in study %}
+            <li class="nav-item">
+                <a class="nav-link" href="?study_name={{ studygroup.name }}">
+                  {{ studygroup.name }}
+                </a>
+            </li>
+            {% endfor %}
+          {% endif %}
         </ul>
       </div>
     </nav>
@@ -62,22 +46,40 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% if post_list %}
-                {% for post in post_list %}
+                {% if study_list %}
+                {% for assignment in study_list %}
+                {% if study_name|cp:"None" %}
                 <tr class="text-center">
                      <td>
                         <!-- 번호 = 전체건수 - 시작인덱스 - 현재인덱스 + 1 -->
-                        {{ post_list.paginator.count|sub:post_list.start_index|sub:forloop.counter0|add:1 }}
+                        {{ study_list.paginator.count|sub:study_list.start_index|sub:forloop.counter0|add:1 }}
                     </td>
                     <td class="text-start">
-                        <a href="{% url 'nagne:detail' post.id %}">{{ post.subject }}</a>
-                         {% if post.answer_set.count > 0 %}
-                        <span class="text-danger small mx-2">{{ post.answer_set.count }}</span>
+                        <a href="{% url 'nagne:assignment_detail' assignment.id %}">{{ assignment.subject }}</a>
+                         {% if assignment.answer_set.count > 0 %}
+                        <span class="text-danger small mx-2">{{ assignment.answer_set.count }}</span>
                         {% endif %}
                     </td>
-                    <td>{{ post.author.username }}</td>
-                    <td>{{ post.create_date }}</td>
+                    <td>{{ assignment.author.username }}</td>
+                    <td>{{ assignment.create_date }}</td>
                 </tr>
+                {% endif %}
+                {% if assignment.study_name|cp:study_name %}
+                <tr class="text-center">
+                     <td>
+                        <!-- 번호 = 전체건수 - 시작인덱스 - 현재인덱스 + 1 -->
+                        {{ study_list.paginator.count|sub:study_list.start_index|sub:forloop.counter0|add:1 }}
+                    </td>
+                    <td class="text-start">
+                        <a href="{% url 'nagne:assignment_detail' assignment.id %}">{{ assignment.subject }}</a>
+                         {% if assignment.answer_set.count > 0 %}
+                        <span class="text-danger small mx-2">{{ assignment.answer_set.count }}</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ assignment.author.username }}</td>
+                    <td>{{ assignment.create_date }}</td>
+                </tr>
+                {% endif %}
                 {% endfor %}
                 {% else %}
                 <tr>
@@ -89,9 +91,9 @@
             <!-- 페이징처리 시작 -->
             <ul class="pagination justify-content-center">
                 <!-- 이전페이지 -->
-                {% if post_list.has_previous %}
+                {% if study_list.has_previous %}
                 <li class="page-item">
-                    <a class="page-link" data-page="{{ post_list.previous_page_number }}" href="javascript:void(0)">이전</a>
+                    <a class="page-link" data-page="{{ study_list.previous_page_number }}" href="javascript:void(0)">이전</a>
                 </li>
                 {% else %}
                 <li class="page-item disabled">
@@ -99,9 +101,9 @@
                 </li>
                 {% endif %}
                 <!-- 페이지리스트 -->
-                {% for page_number in post_list.paginator.page_range %}
-                {% if page_number >= post_list.number|add:-5 and page_number <= post_list.number|add:5 %}
-                {% if page_number == post_list.number %}
+                {% for page_number in study_list.paginator.page_range %}
+                {% if page_number >= study_list.number|add:-5 and page_number <= study_list.number|add:5 %}
+                {% if page_number == study_list.number %}
                 <li class="page-item active" aria-current="page">
                     <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
                 </li>
@@ -113,9 +115,9 @@
                 {% endif %}
                 {% endfor %}
                 <!-- 다음페이지 -->
-                {% if post_list.has_next %}
+                {% if study_list.has_next %}
                 <li class="page-item">
-                    <a class="page-link" data-page="{{ post_list.next_page_number }}" href="javascript:void(0)">다음</a>
+                    <a class="page-link" data-page="{{ study_list.next_page_number }}" href="javascript:void(0)">다음</a>
                 </li>
                 {% else %}
                 <li class="page-item disabled">
@@ -125,10 +127,10 @@
             </ul>
             <!-- 페이징처리 끝 -->
             <div class="col-6 offset-11">
-                    <a href="{% url 'nagne:post_create' %}" class="btn btn-primary">글쓰기</a>
+                    <a href="{% url 'nagne:assignment_create' %}" class="btn btn-primary">글쓰기</a>
             </div>
         </div>
-        <form id="searchForm" method="get" action="{% url 'nagne:post_list' %}">
+        <form id="searchForm" method="get" action="{% url 'nagne:study_list' %}">
             <input type="hidden" id="kw" name="kw" value="{{ kw|default_if_none:'' }}">
             <input type="hidden" id="page" name="page" value="{{ page }}">
         </form>

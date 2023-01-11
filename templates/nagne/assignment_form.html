@@ -1,0 +1,47 @@
+{% extends 'home.html' %}
+{% block content %}
+<div class="container">
+    <h5 class="my-3 border-bottom pb-2">과제등록</h5>
+    <form method="post">
+        {% csrf_token %}
+
+        <!-- 오류표시 Start -->
+        {% if form.errors %}
+        <div class="alert alert-danger" role="alert">
+            {% for field in form %}
+            {% if field.errors %}
+            <div>
+                <strong>{{ field.label }}</strong>
+                {{ field.errors }}
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        {% endif %}
+        <!-- 오류표시 End -->
+        <div class="mb-3">
+            <label for="study_name">스터디</label>
+            <select class="form-select so" name="study_name" id="study_name">
+                <option selected>스터디를 선택해주세요</option>
+                <option value="Django">Django</option>
+                <option value="C-Programming">C-Programming</option>
+                <option value="Backend">Backend</option>
+                <option value="Algorithm">Algorithm</option>
+                <option value="Swift">Swift</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="subject" class="form-label">제목</label>
+            <input type="text" class="form-control" name="subject" id="subject"
+                   value="{{ form.subject.value|default_if_none:'' }}">
+        </div>
+        <div class="mb-3">
+            <label for="content" class="form-label">내용</label>
+            <textarea class="form-control" name="content"
+                      id="content" rows="10">{{ form.content.value|default_if_none:'' }}</textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">저장하기</button>
+    </form>
+</div>
+{% endblock %}
