@@ -23,11 +23,11 @@
             <label for="study_name">스터디</label>
             <select class="form-select so" name="study_name" id="study_name">
                 <option selected>스터디를 선택해주세요</option>
-                <option value="Django">Django</option>
-                <option value="C-Programming">C-Programming</option>
-                <option value="Backend">Backend</option>
-                <option value="Algorithm">Algorithm</option>
-                <option value="Swift">Swift</option>
+                {% if study %}
+                    {% for studygroup in study %}
+                    <option value="{{ studygroup.name }}">{{ studygroup.name }}</option>
+                    {% endfor %}
+                {% endif %}
             </select>
         </div>
         <div class="mb-3">

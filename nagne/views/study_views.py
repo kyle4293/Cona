@@ -40,6 +40,8 @@ def assignment_detail(request, assignment_id):
 
 @login_required(login_url='common:login')
 def assignment_create(request):
+    study = StudyGroup.objects.all()
+    study_name = request.GET.get('study_name')
     if request.method == 'POST':
         form = AssignmentForm(request.POST)
         if form.is_valid():
@@ -50,7 +52,7 @@ def assignment_create(request):
             return redirect('nagne:study_list')
     else:
         form = AssignmentForm()
-    context = {'form': form}
+    context = {'form': form, 'study': study, 'study_name':study_name}
     return render(request, 'nagne/assignment_form.html', context)
 
 @login_required(login_url='common:login')
